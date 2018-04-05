@@ -35,6 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // official is this, but path not defined:
 //app.use(express.static(path.join(__dirname, "public")))
 app.use(express.static(__dirname + '/public'))
+app.use(methodOverride('_method'))
 
 //---------------PASSPORT CONFIG-----------------
 app.use(
