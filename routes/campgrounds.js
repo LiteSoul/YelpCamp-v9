@@ -50,6 +50,9 @@ router.get('/campgrounds/:id', function(req, res) {
 		})
 })
 
+// EDIT CAMPGROUND ROUTE
+// UPDATE CAMPGROUND ROUTE
+
 //checks if is logged in before doing the next step
 //this functions as a middleware, use it after a route, before the callback
 function isLoggedIn(req, res, next) {

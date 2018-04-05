@@ -14,6 +14,7 @@ const seedDB = require('./seeds')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const session = require('express-session')
+const methodOverride = require('method-override')
 //Routes:
 const campgroundRoutes = require('./routes/campgrounds')
 const commentsRoutes = require('./routes/comments')
