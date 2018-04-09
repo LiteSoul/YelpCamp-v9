@@ -1,3 +1,5 @@
+//This seed is no longer relevant since it doesn't have an 'author'
+//Besides mlab mongodb since yelp-v10 populated mannually without any seeds
 const mongoose = require('mongoose')
 const Campground = require('./models/campground')
 const Comment = require('./models/comment')
