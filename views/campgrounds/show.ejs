@@ -29,8 +29,8 @@
 						</p>
 						<p>
 							<% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
-								<a href="/campgrounds/<%= campground._id %>/edit">
-									<input type="button" class="float-left btn btn-outline-warning btn-sm" value="✎ Edit Campground">
+								<a href="/campgrounds/<%= campground._id %>/edit" class="float-left btn btn-outline-warning btn-sm">
+									✎ Edit Campground
 								</a>
 								<form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
 									<button class="btn btn-outline-danger btn-sm">🗑 Delete</button>
@@ -48,10 +48,8 @@
 				<div class="card" style="margin-top:1rem">
 					<div class="card-header" style="border-bottom:red">
 						Reviews
-						<a href="/campgrounds/<%= campground._id %>/comments/new">
-							<button type="button" class="btn btn-outline-primary float-right">
-								+ Add a Review
-							</button>
+						<a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-outline-primary float-right">
+							+ Add a Review
 						</a>
 					</div>
 
@@ -65,14 +63,11 @@
 									<p>★★★★☆
 										<%= comment.text %>
 											<span class="float-right">
-												<a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">
-													<button class="btn btn-outline-warning btn-sm">✎</button>
+												<a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-outline-warning btn-sm">
+													✎
 												</a>
 											</span>
-
-
 									</p>
-
 									<footer class="blockquote-footer">
 										<%= comment.author.username %>
 											<span class="float-right">10 days ago</span>
