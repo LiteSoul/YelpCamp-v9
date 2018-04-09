@@ -4,7 +4,7 @@ const router = express.Router()
 const Campground = require('../models/campground')
 
 //CREATE route - add new campground to DB
-router.post('/campgrounds', isLoggedIn, function (req, res) {
+router.post('/campgrounds', isLoggedIn, function(req, res) {
 	// get data from form and add to campgrounds array
 	var name = req.body.name
 	var image = req.body.image
@@ -20,7 +20,7 @@ router.post('/campgrounds', isLoggedIn, function (req, res) {
 		author
 	}
 	//Create a new campground and save it to DB:
-	Campground.create(newCampground, function (err, new_camp) {
+	Campground.create(newCampground, function(err, new_camp) {
 		if (err) {
 			console.log(err)
 		} else {
@@ -32,12 +32,12 @@ router.post('/campgrounds', isLoggedIn, function (req, res) {
 })
 
 //NEW - show form to create new campground
-router.get('/campgrounds/new', isLoggedIn, function (req, res) {
+router.get('/campgrounds/new', isLoggedIn, function(req, res) {
 	res.render('campgrounds/new')
 })
 
 //SHOW - show info about a single camp ID
-router.get('/campgrounds/:id', function (req, res) {
+router.get('/campgrounds/:id', function(req, res) {
 	//find the campground with provided id
 	//that :id is being captured here with .params
 	//mongoose gives us this method: .findById(id,callback)
@@ -45,7 +45,7 @@ router.get('/campgrounds/:id', function (req, res) {
 	//to populate the found campground with the comments
 	Campground.findById(req.params.id)
 		.populate('comments')
-		.exec(function (err, foundCamp) {
+		.exec(function(err, foundCamp) {
 			if (err) {
 				console.log(err)
 			} else {
@@ -71,15 +71,19 @@ router.get('/campgrounds/:id/edit', (req, res) => {
 // UPDATE CAMPGROUND ROUTE
 router.put('/campgrounds/:id', (req, res) => {
 	//find and update the correct campground
-	Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCamp) => {
-		if (err) res.redirect('/campgrounds')
-		else res.redirect(`/campgrounds/${req.params.id}`)
-	})
+	Campground.findByIdAndUpdate(
+		req.params.id,
+		req.body.campground,
+		(err, updatedCamp) => {
+			if (err) res.redirect('/campgrounds')
+			else res.redirect(`/campgrounds/${req.params.id}`)
+		}
+	)
 })
 // DESTROY CAMPGROUND ROUTE
-router.delete('/campgrounds/:id',(req,res)=>{
-	Campground.findByIdAndRemove(req.params.id,(err,deletedCamp)=>{
-		if(err) res.redirect(`/campgrounds/${req.params.id}`)
+router.delete('/campgrounds/:id', (req, res) => {
+	Campground.findByIdAndRemove(req.params.id, (err, deletedCamp) => {
+		if (err) res.redirect(`/campgrounds/${req.params.id}`)
 		else res.redirect('/campgrounds')
 	})
 })
