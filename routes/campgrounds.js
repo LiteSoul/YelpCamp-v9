@@ -68,7 +68,7 @@ router.get('/campgrounds/:id/edit', (req, res) => {
 		}
 	})
 })
-
+// UPDATE CAMPGROUND ROUTE
 router.put('/campgrounds/:id', (req, res) => {
 	//find and update the correct campground
 	Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCamp) => {
@@ -76,8 +76,13 @@ router.put('/campgrounds/:id', (req, res) => {
 		else res.redirect(`/campgrounds/${req.params.id}`)
 	})
 })
-
-// UPDATE CAMPGROUND ROUTE
+// DESTROY CAMPGROUND ROUTE
+router.delete('/campgrounds/:id',(req,res)=>{
+	Campground.findByIdAndRemove(req.params.id,(err,deletedCamp)=>{
+		if(err) res.redirect(`/campgrounds/${req.params.id}`)
+		else res.redirect('/campgrounds')
+	})
+})
 
 //checks if is logged in before doing the next step
 //this functions as a middleware, use it after a route, before the callback
