@@ -28,17 +28,19 @@
 							<%= campground.description %>
 						</p>
 						<p>
-							<a href="/campgrounds/<%= campground._id %>/edit">
-								<input type="button" class="float-left btn btn-outline-warning btn-sm" value="✎ Edit Campground">
-							</a>
-							<form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
-								<button class="btn btn-outline-danger btn-sm">🗑 Delete</button>
-							</form>
-							<span class="float-right">
-								<em>Submitted By
-									<%= campground.author.username %>
-								</em>
-							</span>
+							<% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+								<a href="/campgrounds/<%= campground._id %>/edit">
+									<input type="button" class="float-left btn btn-outline-warning btn-sm" value="✎ Edit Campground">
+								</a>
+								<form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+									<button class="btn btn-outline-danger btn-sm">🗑 Delete</button>
+								</form>
+								<% } %>
+									<span class="float-right">
+										<em>Submitted By
+											<%= campground.author.username %>
+										</em>
+									</span>
 						</p>
 					</div>
 				</div>
