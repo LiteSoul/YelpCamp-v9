@@ -58,14 +58,11 @@ router.get('/campgrounds/:id', function(req, res) {
 })
 
 // EDIT CAMPGROUND ROUTE
-router.get('/campgrounds/:id/edit', (req, res) => {
+router.get('/campgrounds/:id/edit', checkCampOwnership, (req, res) => {
 	Campground.findById(req.params.id, (err, foundCamp) => {
-		if (err) res.redirect('/campgrounds')
-		else {
-			res.render('campgrounds/edit', {
-				campground: foundCamp
-			})
-		}
+		res.render('campgrounds/edit', {
+			campground: foundCamp
+		})
 	})
 })
 // UPDATE CAMPGROUND ROUTE
@@ -88,13 +85,28 @@ router.delete('/campgrounds/:id', (req, res) => {
 	})
 })
 
+//MIDDLEWARE use these after a route, before the callback
 //checks if is logged in before doing the next step
-//this functions as a middleware, use it after a route, before the callback
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next()
 	}
 	res.redirect('/login')
+}
+//checks if the current user is the owner (author) of the current campground
+function checkCampOwnership(req, res, next) {
+	if (req.isAuthenticated()) {
+		Campground.findById(req.params.id, (err, foundCamp) => {
+			if (err) res.redirect('back')
+			else {
+				//	//does user own campground?
+				//mongoose stores authorid as an mongoose object, not string so to compare them
+				// we use mongoose method equals()
+				if (foundCamp.author.id.equals(req.user._id)) next()
+				else res.redirect('back')
+			}
+		})
+	} else res.redirect('back') //takes the user to the 'previous' page
 }
 
 module.exports = router
