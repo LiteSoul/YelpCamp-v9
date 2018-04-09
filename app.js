@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+mongoose.Promise = Promise
 //models require
 const Campground = require('./models/campground')
 const Comment = require('./models/comment')
@@ -59,9 +60,9 @@ app.use((req, res, next) => {
 })
 
 //Use routes
+app.use(indexRoutes)
 app.use(campgroundRoutes)
 app.use(commentsRoutes)
-app.use(indexRoutes)
 
 //-------------404 PAGE-----------------
 app.get('*', (req, res) => {

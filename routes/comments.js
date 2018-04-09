@@ -49,6 +49,8 @@ router.post('/campgrounds/:id/comments', isLoggedIn, function(req, res) {
 		}
 	})
 })
+//Edit a comment
+router.get('/campgrounds/:id/comments/:comment_id/edit', (req, res) => {})
 
 //checks if is logged in before doing the next step
 //this functions as a middleware, use it after a route, before the callback

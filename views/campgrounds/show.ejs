@@ -59,9 +59,20 @@
 						<% campground.comments.forEach(function(comment){ %>
 							<li class="list-group-item">
 								<blockquote class="blockquote mb-0">
+									<form class="float-right" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+										<button class="btn btn-outline-danger btn-sm">🗑</button>
+									</form>
 									<p>★★★★☆
 										<%= comment.text %>
+											<span class="float-right">
+												<a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">
+													<button class="btn btn-outline-warning btn-sm">✎</button>
+												</a>
+											</span>
+
+
 									</p>
+
 									<footer class="blockquote-footer">
 										<%= comment.author.username %>
 											<span class="float-right">10 days ago</span>
