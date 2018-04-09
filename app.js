@@ -21,10 +21,8 @@ const commentsRoutes = require('./routes/comments')
 const indexRoutes = require('./routes/index')
 
 //-------------------CONNECT TO DB--------------
-//connect to a db, and creating it:
-//mongoose.connect("mongodb://yelp:yelp@ds028310.mlab.com:28310/yelp")
 // Using `mongoose.connect`...
-mongoose.connect('mongodb://yelpv6:yelpv6@ds151963.mlab.com:51963/yelp-v6', {
+mongoose.connect('mongodb://admin:admin@ds255797.mlab.com:55797/yelp-v10', {
 	useMongoClient: true
 	/* other options */
 })
