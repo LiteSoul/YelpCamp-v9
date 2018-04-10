@@ -3,9 +3,9 @@
 	<div class="container">
 		<div class="row" style="width: 40%; margin: 30px auto;">
 			<div class="form-group">
-				<h3>Edit:</h3>
+				<h3>Edit comment:</h3>
 			</div>
-			<form action="/campgrounds/<%= campground._id %>/comments/<%= campground._id %>?_method=PUT" method="POST">
+			<form action="/campgrounds/<%= campground_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
 				<div class="form-group">
 					<input class="form-control" type="text" name="comment[text]" value="<%= comment.text %>">
 				</div>
