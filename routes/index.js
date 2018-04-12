@@ -65,12 +65,4 @@ router.get('/logout', (req, res) => {
 	res.redirect('/campgrounds')
 })
 
-//checks if is logged in before doing the next step
-//this functions as a middleware, use it after a route, before the callback
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next()
-	}
-	res.redirect('/login')
-}
 module.exports = router

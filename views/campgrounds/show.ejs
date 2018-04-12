@@ -57,21 +57,25 @@
 						<% campground.comments.forEach(function(comment){ %>
 							<li class="list-group-item">
 								<blockquote class="blockquote mb-0">
-									<form class="float-right" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
-										<button class="btn btn-outline-danger btn-sm">🗑</button>
-									</form>
-									<p>★★★★☆
-										<%= comment.text %>
-											<span class="float-right">
-												<a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-outline-warning btn-sm">
-													✎
-												</a>
-											</span>
-									</p>
-									<footer class="blockquote-footer">
-										<%= comment.author.username %>
-											<span class="float-right">10 days ago</span>
-									</footer>
+									<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+										<form class="float-right" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+											<button class="btn btn-outline-danger btn-sm">🗑</button>
+										</form>
+										<% } %>
+											<p>★★★★☆
+												<%= comment.text %>
+													<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+														<span class="float-right">
+															<a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-outline-warning btn-sm">
+																✎
+															</a>
+														</span>
+														<% } %>
+											</p>
+											<footer class="blockquote-footer">
+												<%= comment.author.username %>
+													<span class="float-right">10 days ago</span>
+											</footer>
 								</blockquote>
 							</li>
 							<% }) %>
