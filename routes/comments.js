@@ -73,6 +73,7 @@ router.put('/campgrounds/:id/comments/:comment_id', (req, res) => {
 })
 // Destroy comment route
 router.delete('/campgrounds/:id/comments/:comment_id', (req, res) => {
+	// res.send('YOU ARE TRYING TO ERASE ME!!! :()')
 	Comment.findByIdAndRemove(req.params.comment_id, (err, deletedComment) => {
 		res.redirect(`/campgrounds/${req.params.id}`)
 	})
