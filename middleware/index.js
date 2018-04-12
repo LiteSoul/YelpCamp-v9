@@ -1,3 +1,6 @@
+const Campground = require('../models/campground')
+const Comment = require('../models/comment')
+
 let middlewareObj = {}
 
 //checks if is logged in before doing the next step
