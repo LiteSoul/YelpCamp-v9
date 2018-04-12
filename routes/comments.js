@@ -3,23 +3,28 @@ const router = express.Router()
 //models require
 const Campground = require('../models/campground')
 const Comment = require('../models/comment')
+const middleware = require('../middleware')
 
 //Comments new
-router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
-	//see SHOW campground route for method
-	Campground.findById(req.params.id, function(err, foundCamp) {
-		if (err) {
-			console.log(err)
-		} else {
-			res.render('comments/new', { campground: foundCamp })
-		}
-	})
-})
+router.get(
+	'/campgrounds/:id/comments/new',
+	middleware.isLoggedIn,
+	(req, res) => {
+		//see SHOW campground route for method
+		Campground.findById(req.params.id, (err, foundCamp) => {
+			if (err) {
+				console.log(err)
+			} else {
+				res.render('comments/new', { campground: foundCamp })
+			}
+		})
+	}
+)
 
 //Comments create
-router.post('/campgrounds/:id/comments', isLoggedIn, function(req, res) {
+router.post('/campgrounds/:id/comments', middleware.isLoggedIn, (req, res) => {
 	//Create a new comment and save it to DB:
-	Campground.findById(req.params.id, function(err, foundCamp) {
+	Campground.findById(req.params.id, (err, foundCamp) => {
 		if (err) {
 			console.log(err)
 			res.redirect('/campgrounds')
@@ -30,7 +35,7 @@ router.post('/campgrounds/:id/comments', isLoggedIn, function(req, res) {
 			//var text = req.body.comment.text
 			//var newComment = {author, text}
 			//we just use comment[array] sent from new.ejs
-			Comment.create(req.body.comment, function(err, new_comm) {
+			Comment.create(req.body.comment, (err, new_comm) => {
 				if (err) {
 					console.log(err)
 				} else {
@@ -52,7 +57,7 @@ router.post('/campgrounds/:id/comments', isLoggedIn, function(req, res) {
 //Edit comment route
 router.get(
 	'/campgrounds/:id/comments/:comment_id/edit',
-	checkCommentOwnership,
+	middleware.checkCommentOwnership,
 	(req, res) => {
 		Comment.findById(req.params.comment_id, (err, foundComment) => {
 			if (err) res.redirect('back')
@@ -67,7 +72,7 @@ router.get(
 //Update comment route
 router.put(
 	'/campgrounds/:id/comments/:comment_id',
-	checkCommentOwnership,
+	middleware.checkCommentOwnership,
 	(req, res) => {
 		Comment.findByIdAndUpdate(
 			req.params.comment_id,
@@ -82,7 +87,7 @@ router.put(
 // Destroy comment route
 router.delete(
 	'/campgrounds/:id/comments/:comment_id',
-	checkCommentOwnership,
+	middleware.checkCommentOwnership,
 	(req, res) => {
 		// res.send('YOU ARE TRYING TO ERASE ME!!! :()')
 		Comment.findByIdAndRemove(req.params.comment_id, (err, deletedComment) => {
@@ -90,30 +95,5 @@ router.delete(
 		})
 	}
 )
-
-//checks if is logged in before doing the next step
-//this functions as a middleware, use it after a route, before the callback
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next()
-	}
-	res.redirect('/login')
-}
-
-//checks if the current user is the owner (author) of the current comment
-function checkCommentOwnership(req, res, next) {
-	if (req.isAuthenticated()) {
-		Comment.findById(req.params.comment_id, (err, foundComment) => {
-			if (err) res.redirect('back')
-			else {
-				//	//does user own comment?
-				//mongoose stores authorid as an mongoose object, not string so to compare them
-				// we use mongoose method equals()
-				if (foundComment.author.id.equals(req.user._id)) next()
-				else res.redirect('back')
-			}
-		})
-	} else res.redirect('back') //takes the user to the 'previous' page
-}
 
 module.exports = router
