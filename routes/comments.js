@@ -71,6 +71,12 @@ router.put('/campgrounds/:id/comments/:comment_id', (req, res) => {
 		}
 	)
 })
+// Destroy comment route
+router.delete('/campgrounds/:id/comments/:comment_id', (req, res) => {
+	Comment.findByIdAndRemove(req.params.comment_id, (err, deletedComment) => {
+		res.redirect(`/campgrounds/${req.params.id}`)
+	})
+})
 
 //checks if is logged in before doing the next step
 //this functions as a middleware, use it after a route, before the callback
